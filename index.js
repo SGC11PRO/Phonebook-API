@@ -5,22 +5,25 @@ app.use(express.json())
 
 // variables y funciones
 let contacts = [
-  {
-    id: 1,
-    name: 'Sergio Garcia',
-    phone: '612 345 678'
+  { 
+    "id": 1,
+    "name": "Arto Hellas", 
+    "number": "040-123456"
   },
-
-  {
-    id: 2,
-    name: 'Ada Lovelace',
-    phone: '571 612 348'
+  { 
+    "id": 2,
+    "name": "Ada Lovelace", 
+    "number": "39-44-5323523"
   },
-
-  {
-    id: 3,
-    name: 'Dan Hemsworth',
-    phone: '581 275 965'
+  { 
+    "id": 3,
+    "name": "Dan Abramov", 
+    "number": "12-43-234345"
+  },
+  { 
+    "id": 4,
+    "name": "Mary Poppendieck", 
+    "number": "39-23-6423122"
   }
 ]
 
@@ -28,6 +31,12 @@ let contacts = [
 // definimos rutas -------------------------------------------------------------------------------------------------------------------
 app.get('/', (request, response) => { // ruta principal
   response.send('<h1>Hello World!</h1>')
+})
+
+// ruta info
+app.get('/info', (request, response) => {
+  const date = new Date().toString()
+  response.send(`<p>Phonebook has info for ${contacts.length} contacts</p><small><p>${date}</p></small>`)
 })
 
 app.get('/api/contacts', (request, response) => { // ruta que contiene todas los contactos de la API
@@ -59,6 +68,9 @@ app.delete('/api/contacts/:id', (request, response) => {
     contacts = contacts.filter(contact => contact.id !== id)
 
     response.status(204).end() // enviamos un 204 no content
+
+    // confirma la operacion en la consola
+    console.log('[-] Se ha eliminado el contacto con id', id)
 })
 
 // crear recurso
@@ -69,17 +81,19 @@ app.post('/api/contacts', (request, response) => {
         ? Math.max(...contacts.map(n => n.id))
         : 0
 
-    const contact = request.body
-    
-    // asignamos la id
-    contact.id = maxId + 1
+    const contact = {
+      id: maxId + 1,
+      name: request.body.name,
+      number: request.body.number
+    }
     
     // lo añadimos al array
     contacts.concat(contact)
 
     // respondemos en el server
     response.json(contact)
-    console.log('Created ', contact)
+
+    console.log(contacts)
 })
 
 
