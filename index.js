@@ -24,12 +24,23 @@ let contacts = [
 
 
 // definimos rutas -------------------------------------------------------------------------------------------------------------------
-app.get('/', (request, response) => {
+app.get('/', (request, response) => { // ruta principal
   response.send('<h1>Hello World!</h1>')
 })
 
-app.get('/api/contacts', (request, response) => {
+app.get('/api/contacts', (request, response) => { // ruta que contiene todas los contactos de la API
   response.json(contacts)
+})
+
+app.get('/api/contacts/:id', (request, response) => {
+    // extrae la id de la solicitud
+    const id = request.params.id
+
+    // encuentra el contacto cuya id === :id
+    const contact = contacts.find(contact => contact.id === id)
+
+    // devuelve un json con ese unico contacto
+    response.json(contact)
 })
 
 
