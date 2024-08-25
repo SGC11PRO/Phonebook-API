@@ -87,13 +87,11 @@ app.post('/api/contacts', (request, response) => {
       number: request.body.number
     }
     
-    // lo añadimos al array
-    contacts.concat(contact)
+    // lo añadimos al array -> ASIGNANDOLE UN NUEVO VALOR
+    contacts = contacts.concat(contact)
 
     // respondemos en el server
     response.json(contact)
-
-    console.log(contacts)
 })
 
 
