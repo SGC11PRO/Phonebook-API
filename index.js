@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 
+// variables y funciones
 let contacts = [
   {
     id: '1',
@@ -21,6 +22,8 @@ let contacts = [
   }
 ]
 
+
+// definimos rutas -------------------------------------------------------------------------------------------------------------------
 app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>')
 })
@@ -29,6 +32,8 @@ app.get('/api/contacts', (request, response) => {
   response.json(contacts)
 })
 
+
+// connect server --------------------------------------------------------------------------------------------------------------------
 const PORT = 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
